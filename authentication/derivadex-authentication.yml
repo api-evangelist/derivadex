@@ -1,0 +1,29 @@
+generated: '2026-07-18'
+method: searched
+source: https://exchange.derivadex.com/api-docs
+docs: https://docs.derivadex.io/technical-and-developer/api
+summary:
+  types: [none, wallet-signature]
+  api_key_in: []
+  oauth2_flows: []
+  notes: >-
+    The documented public REST endpoints require no authentication ("This
+    operation does not require authentication"). DerivaDEX additionally exposes
+    an Authenticated REST API and a Realtime API; as a non-custodial on-chain
+    exchange, authenticated/trading actions are authorized by Ethereum wallet
+    signatures (EIP-712 typed-data) rather than API keys or OAuth. The public
+    market-data and stats surface captured in openapi/ is fully unauthenticated.
+schemes:
+  - name: public
+    type: none
+    description: Public REST market-data and stats endpoints require no credentials.
+    applies_to: openapi/derivadex-exchange-openapi.yml
+  - name: walletSignature
+    type: wallet-signature
+    scheme: eip712
+    description: >-
+      Authenticated/trading operations are authorized by signing EIP-712
+      typed-data with the trader's Ethereum wallet; there is no server-issued
+      API key or OAuth token. Not modeled in the public OpenAPI (public surface
+      only).
+    docs: https://docs.derivadex.io/technical-and-developer/api
