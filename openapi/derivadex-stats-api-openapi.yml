@@ -1,0 +1,245 @@
+openapi: 3.1.0
+info:
+  title: DerivaDEX Exchange & Market Stats API
+  version: v1
+  description: 'Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ "value": ..., "timestamp": <unix>, "success": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.'
+  x-apievangelist-generated: '2026-07-18'
+  x-apievangelist-method: searched
+  x-apievangelist-source: https://exchange.derivadex.com/api-docs
+  contact:
+    name: DerivaDEX
+    url: https://docs.derivadex.io/
+servers:
+- url: https://exchange.derivadex.com
+  description: DerivaDEX mainnet pilot
+tags:
+- name: Stats
+  description: Protocol aggregations, supply, positions, strategies, fees, and trader data
+paths:
+  /stats/api/v1/status:
+    get:
+      operationId: getStatus
+      summary: Get exchange status
+      description: Current epoch, latest on-chain checkpoint, and active address count.
+      tags:
+      - Stats
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /stats/api/v1/supply:
+    get:
+      operationId: getSupply
+      summary: Get DDX supply
+      description: 'DDX token circulating supply. May return `{ "success": false }` when unavailable.'
+      tags:
+      - Stats
+      responses:
+        '200':
+          description: Supply
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /stats/api/v1/aggregations/collateral:
+    get:
+      operationId: getCollateralAggregations
+      summary: Get collateral aggregations
+      description: Time-series aggregation of collateral deposits/withdrawals across the protocol.
+      tags:
+      - Stats
+      responses:
+        '200':
+          description: Collateral aggregations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /stats/api/v1/aggregations/ddx:
+    get:
+      operationId: getDdxAggregations
+      summary: Get DDX aggregations
+      description: Time-series aggregation of DDX deposits, withdrawals, trade-mining rewards, and fees. Cursor-paginated via `nextStartingValue`.
+      tags:
+      - Stats
+      responses:
+        '200':
+          description: DDX aggregations
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Envelope'
+                - type: object
+                  properties:
+                    nextStartingValue:
+                      type: string
+                      description: Pagination cursor for the next page
+  /stats/api/v1/fees:
+    get:
+      operationId: getFees
+      summary: Get strategy fees
+      description: Fee records per trader/strategy.
+      tags:
+      - Stats
+      parameters:
+      - name: trader
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: strategyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: symbol
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: epoch
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: txOrdinal
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: ordinal
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Fees
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /stats/api/v1/positions:
+    get:
+      operationId: getPositions
+      summary: Get positions
+      description: Current open positions, filterable by trader/strategy/symbol.
+      tags:
+      - Stats
+      parameters:
+      - name: trader
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: strategyId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: symbol
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Positions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /stats/api/v1/strategies:
+    get:
+      operationId: getStrategies
+      summary: Get trader strategies
+      description: Trading strategies (margin accounts), filterable by trader.
+      tags:
+      - Stats
+      parameters:
+      - name: trader
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Strategies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /stats/api/v1/trader:
+    get:
+      operationId: getTrader
+      summary: Get trader profile
+      description: Profile/aggregate data for a single trader address.
+      tags:
+      - Stats
+      parameters:
+      - name: trader
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Trader address
+      responses:
+        '200':
+          description: Trader
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+components:
+  schemas:
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
+          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success

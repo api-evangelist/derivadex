@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: DerivaDEX Exchange & Stats Market System API
+  version: v1
+  description: 'Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ "value": ..., "timestamp": <unix>, "success": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.'
+  x-apievangelist-generated: '2026-07-18'
+  x-apievangelist-method: searched
+  x-apievangelist-source: https://exchange.derivadex.com/api-docs
+  contact:
+    name: DerivaDEX
+    url: https://docs.derivadex.io/
+servers:
+- url: https://exchange.derivadex.com
+  description: DerivaDEX mainnet pilot
+tags:
+- name: System
+  description: Health, server time, and exchange configuration
+paths:
+  /exchange/api/v1/ping:
+    get:
+      operationId: ping
+      summary: Ping the exchange
+      description: Connectivity/health check. Returns an empty value object on success.
+      tags:
+      - System
+      responses:
+        '200':
+          description: Exchange is reachable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /exchange/api/v1/time:
+    get:
+      operationId: getServerTime
+      summary: Get server time
+      description: Returns the current exchange server time in milliseconds.
+      tags:
+      - System
+      responses:
+        '200':
+          description: Server time
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Envelope'
+                - type: object
+                  properties:
+                    value:
+                      type: object
+                      properties:
+                        serverTime:
+                          type: integer
+                          description: Server time in ms
+  /exchange/api/v1/exchange_info:
+    get:
+      operationId: getExchangeInfo
+      summary: Get exchange info
+      description: 'Returns exchange configuration: settlement epoch schedule, supported collateral assets, and tradable symbols with their tick sizes and limits.'
+      tags:
+      - System
+      responses:
+        '200':
+          description: Exchange configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /exchange/api/v1/symbols:
+    get:
+      operationId: listSymbols
+      summary: List tradable symbols
+      description: Returns the list of tradable perpetual products and their metadata.
+      tags:
+      - System
+      responses:
+        '200':
+          description: Tradable symbols
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Envelope'
+                - type: object
+                  properties:
+                    value:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Symbol'
+components:
+  schemas:
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
+          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success
+    Symbol:
+      type: object
+      properties:
+        kind:
+          type: integer
+        name:
+          type: string
+        symbol:
+          type: string
+          example: BTCP
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time

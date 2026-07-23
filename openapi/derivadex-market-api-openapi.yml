@@ -1,0 +1,295 @@
+openapi: 3.1.0
+info:
+  title: DerivaDEX Exchange & Stats Market API
+  version: v1
+  description: 'Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ "value": ..., "timestamp": <unix>, "success": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.'
+  x-apievangelist-generated: '2026-07-18'
+  x-apievangelist-method: searched
+  x-apievangelist-source: https://exchange.derivadex.com/api-docs
+  contact:
+    name: DerivaDEX
+    url: https://docs.derivadex.io/
+servers:
+- url: https://exchange.derivadex.com
+  description: DerivaDEX mainnet pilot
+tags:
+- name: Market
+  description: Order book, tickers, mark prices, and order updates
+paths:
+  /exchange/api/v1/tickers:
+    get:
+      operationId: getTickers
+      summary: Get tickers
+      description: 24h market statistics per symbol (last/mark/index price, funding, open interest, volume).
+      tags:
+      - Market
+      parameters:
+      - name: symbol
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by symbol
+        e.g. BTCP: null
+      - name: marketKind
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Filter by market kind
+      responses:
+        '200':
+          description: Ticker data
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Envelope'
+                - type: object
+                  properties:
+                    value:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Ticker'
+  /exchange/api/v1/order_book:
+    get:
+      operationId: getOrderBook
+      summary: Get L3 order book
+      description: Level-3 open order book. Optionally filter by symbol, side, trader, or strategy.
+      tags:
+      - Market
+      parameters:
+      - name: symbol
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by symbol
+      - name: side
+        in: query
+        required: false
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+        description: 0=bid
+        1=ask: null
+      - name: depth
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Number of levels/orders to return
+      - name: trader
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by trader address
+      - name: strategyIdHash
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by strategy id hash
+      responses:
+        '200':
+          description: Open orders
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Envelope'
+                - type: object
+                  properties:
+                    value:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Order'
+  /exchange/api/v1/mark_prices:
+    get:
+      operationId: getMarkPrices
+      summary: Get mark prices
+      description: Historical mark prices for a symbol, paginated by global ordinal.
+      tags:
+      - Market
+      parameters:
+      - name: symbol
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by symbol
+      - name: epoch
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filter by epoch
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Max records to return
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+        description: Sort order
+      - name: globalOrdinal
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Pagination cursor (global ordinal)
+      responses:
+        '200':
+          description: Mark prices
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+  /exchange/api/v1/order_updates:
+    get:
+      operationId: getOrderUpdates
+      summary: Get order updates
+      description: Historical order/trade updates, filterable by trader, strategy, symbol, order hash, or reason.
+      tags:
+      - Market
+      parameters:
+      - name: symbol
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: trader
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: strategyIdHash
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: orderHash
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: reason
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: since
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: globalOrdinal
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Pagination cursor
+      responses:
+        '200':
+          description: Order updates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+components:
+  schemas:
+    Ticker:
+      type: object
+      properties:
+        symbol:
+          type: string
+        kind:
+          type: integer
+        highPrice24h:
+          type: string
+        lowPrice24h:
+          type: string
+        prevPrice24h:
+          type: string
+        lastPrice:
+          type: string
+        markPrice:
+          type: string
+        indexPrice:
+          type: string
+        nextFundingTime:
+          type: string
+          format: date-time
+        volume24h:
+          type: string
+        amount24h:
+          type: string
+        fundingRate:
+          type: string
+        openInterest:
+          type: string
+        openInterestValue:
+          type: string
+    Order:
+      type: object
+      properties:
+        orderHash:
+          type: string
+        symbol:
+          type: string
+        side:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: 0=bid
+          1=ask: null
+        originalAmount:
+          type: string
+        amount:
+          type: string
+        price:
+          type: string
+        traderAddress:
+          type: string
+        strategyIdHash:
+          type: string
+        bookOrdinal:
+          type: integer
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
+          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success
