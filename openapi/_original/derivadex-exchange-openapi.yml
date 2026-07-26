@@ -1,0 +1,355 @@
+openapi: 3.1.0
+info:
+  title: DerivaDEX Exchange & Stats API
+  version: v1
+  description: >-
+    Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes
+    exchange system/health endpoints, market data (order book, tickers, mark
+    prices, order updates) under `/exchange/api/v1/`, and protocol/stats
+    aggregations (status, DDX supply, collateral, positions, strategies, fees,
+    trader data) under `/stats/api/v1/`. All responses use a uniform envelope
+    `{ "value": ..., "timestamp": <unix>, "success": <bool> }`. The documented
+    public endpoints require no authentication. Captured by the API Evangelist
+    enrichment pipeline from the published Slate reference and verified against
+    the live host.
+  x-apievangelist-generated: '2026-07-18'
+  x-apievangelist-method: searched
+  x-apievangelist-source: https://exchange.derivadex.com/api-docs
+  contact:
+    name: DerivaDEX
+    url: https://docs.derivadex.io/
+servers:
+  - url: https://exchange.derivadex.com
+    description: DerivaDEX mainnet pilot
+tags:
+  - name: System
+    description: Health, server time, and exchange configuration
+  - name: Market
+    description: Order book, tickers, mark prices, and order updates
+  - name: Stats
+    description: Protocol aggregations, supply, positions, strategies, fees, and trader data
+paths:
+  /exchange/api/v1/ping:
+    get:
+      operationId: ping
+      summary: Ping the exchange
+      description: Connectivity/health check. Returns an empty value object on success.
+      tags: [System]
+      responses:
+        '200':
+          description: Exchange is reachable
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /exchange/api/v1/time:
+    get:
+      operationId: getServerTime
+      summary: Get server time
+      description: Returns the current exchange server time in milliseconds.
+      tags: [System]
+      responses:
+        '200':
+          description: Server time
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      value:
+                        type: object
+                        properties:
+                          serverTime: { type: integer, description: Server time in ms }
+  /exchange/api/v1/exchange_info:
+    get:
+      operationId: getExchangeInfo
+      summary: Get exchange info
+      description: >-
+        Returns exchange configuration: settlement epoch schedule, supported
+        collateral assets, and tradable symbols with their tick sizes and limits.
+      tags: [System]
+      responses:
+        '200':
+          description: Exchange configuration
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /exchange/api/v1/symbols:
+    get:
+      operationId: listSymbols
+      summary: List tradable symbols
+      description: Returns the list of tradable perpetual products and their metadata.
+      tags: [System]
+      responses:
+        '200':
+          description: Tradable symbols
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      value:
+                        type: array
+                        items: { $ref: '#/components/schemas/Symbol' }
+  /exchange/api/v1/tickers:
+    get:
+      operationId: getTickers
+      summary: Get tickers
+      description: 24h market statistics per symbol (last/mark/index price, funding, open interest, volume).
+      tags: [Market]
+      parameters:
+        - { name: symbol, in: query, required: false, schema: { type: string }, description: Filter by symbol, e.g. BTCP }
+        - { name: marketKind, in: query, required: false, schema: { type: integer }, description: Filter by market kind }
+      responses:
+        '200':
+          description: Ticker data
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      value:
+                        type: array
+                        items: { $ref: '#/components/schemas/Ticker' }
+  /exchange/api/v1/order_book:
+    get:
+      operationId: getOrderBook
+      summary: Get L3 order book
+      description: Level-3 open order book. Optionally filter by symbol, side, trader, or strategy.
+      tags: [Market]
+      parameters:
+        - { name: symbol, in: query, required: false, schema: { type: string }, description: Filter by symbol }
+        - { name: side, in: query, required: false, schema: { type: integer, enum: [0, 1] }, description: 0=bid, 1=ask }
+        - { name: depth, in: query, required: false, schema: { type: integer }, description: Number of levels/orders to return }
+        - { name: trader, in: query, required: false, schema: { type: string }, description: Filter by trader address }
+        - { name: strategyIdHash, in: query, required: false, schema: { type: string }, description: Filter by strategy id hash }
+      responses:
+        '200':
+          description: Open orders
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      value:
+                        type: array
+                        items: { $ref: '#/components/schemas/Order' }
+  /exchange/api/v1/mark_prices:
+    get:
+      operationId: getMarkPrices
+      summary: Get mark prices
+      description: Historical mark prices for a symbol, paginated by global ordinal.
+      tags: [Market]
+      parameters:
+        - { name: symbol, in: query, required: false, schema: { type: string }, description: Filter by symbol }
+        - { name: epoch, in: query, required: false, schema: { type: string }, description: Filter by epoch }
+        - { name: limit, in: query, required: false, schema: { type: integer }, description: Max records to return }
+        - { name: order, in: query, required: false, schema: { type: string, enum: [asc, desc] }, description: Sort order }
+        - { name: globalOrdinal, in: query, required: false, schema: { type: string }, description: Pagination cursor (global ordinal) }
+      responses:
+        '200':
+          description: Mark prices
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /exchange/api/v1/order_updates:
+    get:
+      operationId: getOrderUpdates
+      summary: Get order updates
+      description: Historical order/trade updates, filterable by trader, strategy, symbol, order hash, or reason.
+      tags: [Market]
+      parameters:
+        - { name: symbol, in: query, required: false, schema: { type: string } }
+        - { name: trader, in: query, required: false, schema: { type: string } }
+        - { name: strategyIdHash, in: query, required: false, schema: { type: string } }
+        - { name: orderHash, in: query, required: false, schema: { type: string } }
+        - { name: reason, in: query, required: false, schema: { type: string } }
+        - { name: since, in: query, required: false, schema: { type: string } }
+        - { name: limit, in: query, required: false, schema: { type: integer } }
+        - { name: order, in: query, required: false, schema: { type: string, enum: [asc, desc] } }
+        - { name: globalOrdinal, in: query, required: false, schema: { type: string }, description: Pagination cursor }
+      responses:
+        '200':
+          description: Order updates
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/status:
+    get:
+      operationId: getStatus
+      summary: Get exchange status
+      description: Current epoch, latest on-chain checkpoint, and active address count.
+      tags: [Stats]
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/supply:
+    get:
+      operationId: getSupply
+      summary: Get DDX supply
+      description: 'DDX token circulating supply. May return `{ "success": false }` when unavailable.'
+      tags: [Stats]
+      responses:
+        '200':
+          description: Supply
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/aggregations/collateral:
+    get:
+      operationId: getCollateralAggregations
+      summary: Get collateral aggregations
+      description: Time-series aggregation of collateral deposits/withdrawals across the protocol.
+      tags: [Stats]
+      responses:
+        '200':
+          description: Collateral aggregations
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/aggregations/ddx:
+    get:
+      operationId: getDdxAggregations
+      summary: Get DDX aggregations
+      description: >-
+        Time-series aggregation of DDX deposits, withdrawals, trade-mining
+        rewards, and fees. Cursor-paginated via `nextStartingValue`.
+      tags: [Stats]
+      responses:
+        '200':
+          description: DDX aggregations
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Envelope'
+                  - type: object
+                    properties:
+                      nextStartingValue: { type: string, description: Pagination cursor for the next page }
+  /stats/api/v1/fees:
+    get:
+      operationId: getFees
+      summary: Get strategy fees
+      description: Fee records per trader/strategy.
+      tags: [Stats]
+      parameters:
+        - { name: trader, in: query, required: false, schema: { type: string } }
+        - { name: strategyId, in: query, required: false, schema: { type: string } }
+        - { name: symbol, in: query, required: false, schema: { type: string } }
+        - { name: epoch, in: query, required: false, schema: { type: string } }
+        - { name: txOrdinal, in: query, required: false, schema: { type: string } }
+        - { name: ordinal, in: query, required: false, schema: { type: string } }
+        - { name: limit, in: query, required: false, schema: { type: integer } }
+        - { name: order, in: query, required: false, schema: { type: string, enum: [asc, desc] } }
+      responses:
+        '200':
+          description: Fees
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/positions:
+    get:
+      operationId: getPositions
+      summary: Get positions
+      description: Current open positions, filterable by trader/strategy/symbol.
+      tags: [Stats]
+      parameters:
+        - { name: trader, in: query, required: false, schema: { type: string } }
+        - { name: strategyId, in: query, required: false, schema: { type: string } }
+        - { name: symbol, in: query, required: false, schema: { type: string } }
+        - { name: limit, in: query, required: false, schema: { type: integer } }
+        - { name: offset, in: query, required: false, schema: { type: integer } }
+      responses:
+        '200':
+          description: Positions
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/strategies:
+    get:
+      operationId: getStrategies
+      summary: Get trader strategies
+      description: Trading strategies (margin accounts), filterable by trader.
+      tags: [Stats]
+      parameters:
+        - { name: trader, in: query, required: false, schema: { type: string } }
+        - { name: limit, in: query, required: false, schema: { type: integer } }
+        - { name: offset, in: query, required: false, schema: { type: integer } }
+      responses:
+        '200':
+          description: Strategies
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+  /stats/api/v1/trader:
+    get:
+      operationId: getTrader
+      summary: Get trader profile
+      description: Profile/aggregate data for a single trader address.
+      tags: [Stats]
+      parameters:
+        - { name: trader, in: query, required: true, schema: { type: string }, description: Trader address }
+      responses:
+        '200':
+          description: Trader
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Envelope' }
+components:
+  schemas:
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp: { type: integer, description: Unix timestamp (seconds) the response was produced }
+        success: { type: boolean, description: Whether the request succeeded }
+      required: [success]
+    Symbol:
+      type: object
+      properties:
+        kind: { type: integer }
+        name: { type: string }
+        symbol: { type: string, example: BTCP }
+        isActive: { type: boolean }
+        createdAt: { type: string, format: date-time }
+    Ticker:
+      type: object
+      properties:
+        symbol: { type: string }
+        kind: { type: integer }
+        highPrice24h: { type: string }
+        lowPrice24h: { type: string }
+        prevPrice24h: { type: string }
+        lastPrice: { type: string }
+        markPrice: { type: string }
+        indexPrice: { type: string }
+        nextFundingTime: { type: string, format: date-time }
+        volume24h: { type: string }
+        amount24h: { type: string }
+        fundingRate: { type: string }
+        openInterest: { type: string }
+        openInterestValue: { type: string }
+    Order:
+      type: object
+      properties:
+        orderHash: { type: string }
+        symbol: { type: string }
+        side: { type: integer, enum: [0, 1], description: 0=bid, 1=ask }
+        originalAmount: { type: string }
+        amount: { type: string }
+        price: { type: string }
+        traderAddress: { type: string }
+        strategyIdHash: { type: string }
+        bookOrdinal: { type: integer }

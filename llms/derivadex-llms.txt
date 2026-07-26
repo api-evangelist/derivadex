@@ -1,0 +1,29 @@
+# DerivaDEX
+
+## DerivaDEX
+
+- [Overview](https://docs.derivadex.io/about-derivadex.md)
+- [Getting started](https://docs.derivadex.io/introduction/getting-started.md)
+- [Deposits](https://docs.derivadex.io/funding/deposits.md)
+- [Withdrawals](https://docs.derivadex.io/funding/withdrawals.md)
+- [Perpetual swaps](https://docs.derivadex.io/trading/perpetual-swap.md)
+- [Funding rate](https://docs.derivadex.io/trading/perpetual-swap/funding-rate.md)
+- [Strategy](https://docs.derivadex.io/trading/strategy.md)
+- [Fees](https://docs.derivadex.io/trading/fees.md)
+- [Position management](https://docs.derivadex.io/trading/position-management.md)
+- [Order types](https://docs.derivadex.io/trading/position-management/order-types.md): There are two ways to buy or sell perpetual swaps on the DerivaDEX exchange. DerivaDEX supports limit and market orders. Understanding these types of transactions will help you be a successful trader.
+- [PNL](https://docs.derivadex.io/trading/pnl-settlement.md)
+- [Liquidations](https://docs.derivadex.io/trading/liquidations.md): A liquidation occurs when the a trader's margin fraction dips below the maintenance margin ratio, indicating that their account is insufficiently collateralized.
+- [Insurance fund](https://docs.derivadex.io/platform-features/insurance-fund.md)
+- [Trade mining](https://docs.derivadex.io/platform-features/trade-mining.md)
+- [Checkpoints](https://docs.derivadex.io/platform-features/checkpoints.md)
+- [Price feed](https://docs.derivadex.io/platform-features/price-feed.md)
+- [Account data](https://docs.derivadex.io/security/account-data.md)
+- [Execution security](https://docs.derivadex.io/security/execution-security.md)
+- [API](https://docs.derivadex.io/technical-and-developer/api.md)
+- [Contract addresses](https://docs.derivadex.io/technical-and-developer/contract-addresses.md)
+- [FAQ](https://docs.derivadex.io/troubleshooting-and-faq/faq.md)
+- [Troubleshooting](https://docs.derivadex.io/troubleshooting-and-faq/troubleshooting.md)
+- [DerivaDAO Governance](https://docs.derivadex.io/governance/ethereum.md)
+- [DerivaDEX Improvement Proposals (DIPs)](https://docs.derivadex.io/governance/derivadex-improvement-proposals-dips.md)
+- [Voting and Delegation](https://docs.derivadex.io/governance/voting.md)

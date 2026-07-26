@@ -1,0 +1,18 @@
+{
+  "provider": "derivadex",
+  "sources": [
+    "derivadex-market-api-openapi.yml",
+    "derivadex-stats-api-openapi.yml",
+    "derivadex-system-api-openapi.yml"
+  ],
+  "outputs": [
+    "derivadex-market-api-openapi.yml",
+    "derivadex-stats-api-openapi.yml",
+    "derivadex-system-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

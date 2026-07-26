@@ -1,0 +1,22 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/derivadex-exchange-openapi.yml
+notes: >-
+  Cross-cutting standards conformance for the DerivaDEX public REST API. Derived
+  from the OpenAPI and observed behavior; no published third-party compliance
+  certifications were found (see security/ probes). DerivaDEX states it is
+  licensed by the Bermuda Monetary Authority (regulatory license, not a security
+  certification).
+standards:
+  - { id: openapi, conforms: true, evidence: OpenAPI 3.1 captured at openapi/derivadex-exchange-openapi.yml }
+  - { id: rest-json, conforms: true, evidence: JSON-over-HTTP GET endpoints with a uniform envelope }
+  - { id: cursor-pagination, conforms: true, evidence: nextStartingValue cursor + globalOrdinal/limit/order params }
+  - { id: oauth2, conforms: false }
+  - { id: oidc, conforms: false }
+  - { id: rfc9457-problem-details, conforms: false, evidence: "uses { success:false } envelope, not application/problem+json" }
+  - { id: rfc9116-security-txt, conforms: false, evidence: no /.well-known/security.txt served (SPA soft-404) }
+  - { id: fhir, conforms: false }
+  - { id: fapi, conforms: false }
+  - { id: scim, conforms: false }
+  - { id: odata, conforms: false }
+  - { id: json-api, conforms: false }

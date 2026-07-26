@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: searched
+source: probes of /.well-known/ on DerivaDEX hosts
+notes: >-
+  Every /.well-known/ path on exchange.derivadex.com returns HTTP 200 but serves
+  the SPA index.html (content-type text/html) — a soft-404, not a genuine
+  well-known document. No real WellKnown/SecurityTxt artifact is present, so no
+  raw files were saved and no WellKnown/SecurityTxt pointer is emitted.
+hosts:
+  - host: https://exchange.derivadex.com
+    documents:
+      - { path: /.well-known/security.txt, status: 200, content_type: text/html, real: false, file: null }
+      - { path: /.well-known/openid-configuration, status: 200, content_type: text/html, real: false, file: null }
+      - { path: /.well-known/oauth-authorization-server, status: 200, content_type: text/html, real: false, file: null }
+      - { path: /.well-known/api-catalog, status: 200, content_type: text/html, real: false, file: null }
+      - { path: /.well-known/ai-plugin.json, status: 200, content_type: text/html, real: false, file: null }
+  - host: https://derivadex.com
+    documents:
+      - { path: /.well-known/security.txt, status: 404, real: false, file: null }
+      - { path: /.well-known/openid-configuration, status: 404, real: false, file: null }
+      - { path: /.well-known/oauth-authorization-server, status: 404, real: false, file: null }
+      - { path: /.well-known/api-catalog, status: 404, real: false, file: null }
+      - { path: /.well-known/ai-plugin.json, status: 404, real: false, file: null }
+  - host: https://docs.derivadex.io
+    documents:
+      - { path: /.well-known/security.txt, status: 404, real: false, file: null }
+      - { path: /.well-known/openid-configuration, status: 404, real: false, file: null }
+      - { path: /.well-known/oauth-authorization-server, status: 404, real: false, file: null }
+      - { path: /.well-known/api-catalog, status: 404, real: false, file: null }
+      - { path: /.well-known/ai-plugin.json, status: 404, real: false, file: null }

@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for DerivaDEX Exchange & Stats API
+  version: 1.0.0
+extends: openapi/derivadex-exchange-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 3
+      x-apievangelist-notes: >-
+        Public read-only market-data/stats API. Uniform response envelope,
+        cursor pagination, no auth on the public surface. Authenticated trading
+        (EIP-712 wallet signatures) and the Realtime WebSocket API are not
+        modeled in this public spec.
+  - target: $.info
+    update:
+      x-envelope:
+        fields: [value, timestamp, success]
+        error_flag: success=false
+  - target: $.tags
+    update:
+      - name: System
+        description: Health, server time, and exchange configuration

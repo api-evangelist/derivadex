@@ -1,0 +1,56 @@
+generated: '2026-07-18'
+method: searched
+source: https://exchange.derivadex.com/api-docs
+description: >-
+  Cross-cutting request/response semantics for the DerivaDEX public REST API,
+  captured from the Slate reference and verified against the live host.
+authentication:
+  style: none-for-public
+  detail: Public market-data/stats endpoints require no auth; authenticated actions use EIP-712 wallet signatures.
+  ref: authentication/derivadex-authentication.yml
+error_envelope:
+  shape: uniform
+  fields:
+    value: The payload (object or array); omitted on error.
+    timestamp: Unix timestamp (seconds) of the response.
+    success: 'Boolean success flag. On error the body may be just { "success": false }.'
+  example_success: '{ "value": {...}, "timestamp": 1784426787, "success": true }'
+  example_error: '{ "success": false }'
+  ref: errors/derivadex-problem-types.yml
+  rfc9457: false
+idempotency:
+  supported: false
+  detail: >-
+    The captured public surface is read-only (GET only) and documents no
+    idempotency-key header; on-chain trading actions are made idempotent by the
+    signed nonce/order semantics of the protocol, not an HTTP idempotency key.
+pagination:
+  style: cursor
+  detail: >-
+    Ordinal-based cursor pagination. Stats aggregations return a
+    `nextStartingValue` cursor; market/history endpoints accept `globalOrdinal`
+    (or ordinal) plus `limit` and `order` (asc|desc). Some stats endpoints also
+    accept classic `limit`/`offset`.
+  params: [limit, offset, order, globalOrdinal, since, epoch]
+  response_fields: [nextStartingValue]
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: Version is embedded in the path (/exchange/api/v1, /stats/api/v1).
+  ref: lifecycle/derivadex-lifecycle.yml
+rate_limiting:
+  enforced: false
+  detail: >-
+    "While there are no strict rate limits currently enforced, excessive usage
+    may result in temporary restrictions." No rate-limit response headers are
+    documented.
+request_tracing:
+  request_id_header: null
+  detail: No request-id/correlation header is documented.
+data_conventions:
+  numbers_as_strings: true
+  detail: Prices, sizes, and amounts are returned as decimal strings to preserve precision.
+  addresses: Ethereum addresses / hashes are hex strings (traderAddress, orderHash, strategyIdHash).
+  time: >-
+    `timestamp` is unix seconds; `serverTime` is unix milliseconds; some fields
+    (createdAt, nextFundingTime) are ISO-8601.

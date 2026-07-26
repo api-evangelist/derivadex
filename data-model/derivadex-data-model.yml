@@ -1,0 +1,45 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/derivadex-exchange-openapi.yml
+description: >-
+  Entity-relationship graph derived from the DerivaDEX public API schemas and
+  id-reference fields (traderAddress, strategyIdHash, symbol, orderHash).
+entities:
+  - name: Symbol
+    description: A tradable perpetual product (e.g. BTCP, ETHP, DDXP).
+    key: symbol
+    id_prefix: null
+    fields: [symbol, name, kind, isActive, tickSize, minOrderSize, maxOrderNotional]
+  - name: Ticker
+    description: 24h market statistics for a symbol.
+    key: symbol
+    fields: [lastPrice, markPrice, indexPrice, fundingRate, openInterest, volume24h]
+  - name: Order
+    description: A resting order in the L3 order book.
+    key: orderHash
+    fields: [orderHash, symbol, side, price, amount, originalAmount, traderAddress, strategyIdHash, bookOrdinal]
+  - name: Trader
+    description: An on-chain participant identified by Ethereum address.
+    key: traderAddress
+  - name: Strategy
+    description: A margin account / trading strategy owned by a trader.
+    key: strategyIdHash
+  - name: Position
+    description: An open position in a symbol under a strategy.
+    key: [traderAddress, strategyId, symbol]
+  - name: Fee
+    description: A fee record for a trader/strategy.
+  - name: MarkPrice
+    description: Historical mark-price observation for a symbol.
+relationships:
+  - { from: Order, to: Symbol, type: belongs_to, via: symbol }
+  - { from: Order, to: Trader, type: belongs_to, via: traderAddress }
+  - { from: Order, to: Strategy, type: belongs_to, via: strategyIdHash }
+  - { from: Ticker, to: Symbol, type: belongs_to, via: symbol }
+  - { from: MarkPrice, to: Symbol, type: belongs_to, via: symbol }
+  - { from: Strategy, to: Trader, type: belongs_to, via: trader }
+  - { from: Strategy, to: Position, type: has_many, via: strategyId }
+  - { from: Position, to: Symbol, type: belongs_to, via: symbol }
+  - { from: Position, to: Trader, type: belongs_to, via: trader }
+  - { from: Fee, to: Trader, type: belongs_to, via: trader }
+  - { from: Fee, to: Strategy, type: belongs_to, via: strategyId }

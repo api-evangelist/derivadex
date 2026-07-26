@@ -1,0 +1,8 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/derivadex-exchange-openapi.yml
+skills:
+  - file: derivadex-market-data.md
+    name: Read DerivaDEX market data
+    api: openapi/derivadex-exchange-openapi.yml
+    operations: [listSymbols, getExchangeInfo, getTickers, getOrderBook, getMarkPrices, ping]

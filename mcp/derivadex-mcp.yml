@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/derivadex-exchange-openapi.yml
+notes: >-
+  No official/hosted DerivaDEX MCP server was found (GitHub org has no public
+  repos; no registry listing). This is a candidate tool list derived one-to-one
+  from the public read-only OpenAPI operations.
+server:
+  name: derivadex
+  transport: http
+tools:
+  - { name: ping, description: Ping the exchange, source_operation: openapi/derivadex-exchange-openapi.yml#ping }
+  - { name: get_server_time, description: Get exchange server time, source_operation: openapi/derivadex-exchange-openapi.yml#getServerTime }
+  - { name: get_exchange_info, description: Get exchange configuration, source_operation: openapi/derivadex-exchange-openapi.yml#getExchangeInfo }
+  - { name: list_symbols, description: List tradable symbols, source_operation: openapi/derivadex-exchange-openapi.yml#listSymbols }
+  - { name: get_tickers, description: Get 24h tickers, source_operation: openapi/derivadex-exchange-openapi.yml#getTickers }
+  - { name: get_order_book, description: Get L3 order book, source_operation: openapi/derivadex-exchange-openapi.yml#getOrderBook }
+  - { name: get_mark_prices, description: Get historical mark prices, source_operation: openapi/derivadex-exchange-openapi.yml#getMarkPrices }
+  - { name: get_order_updates, description: Get order/trade updates, source_operation: openapi/derivadex-exchange-openapi.yml#getOrderUpdates }
+  - { name: get_status, description: Get exchange status, source_operation: openapi/derivadex-exchange-openapi.yml#getStatus }
+  - { name: get_supply, description: Get DDX supply, source_operation: openapi/derivadex-exchange-openapi.yml#getSupply }
+  - { name: get_collateral_aggregations, description: Get collateral aggregations, source_operation: openapi/derivadex-exchange-openapi.yml#getCollateralAggregations }
+  - { name: get_ddx_aggregations, description: Get DDX aggregations, source_operation: openapi/derivadex-exchange-openapi.yml#getDdxAggregations }
+  - { name: get_fees, description: Get strategy fees, source_operation: openapi/derivadex-exchange-openapi.yml#getFees }
+  - { name: get_positions, description: Get positions, source_operation: openapi/derivadex-exchange-openapi.yml#getPositions }
+  - { name: get_strategies, description: Get trader strategies, source_operation: openapi/derivadex-exchange-openapi.yml#getStrategies }
+  - { name: get_trader, description: Get trader profile, source_operation: openapi/derivadex-exchange-openapi.yml#getTrader }

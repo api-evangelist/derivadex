@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/derivadex-exchange-openapi.yml
+format: envelope
+notes: >-
+  DerivaDEX does not use RFC 9457 problem+json. Errors are signaled inside the
+  uniform response envelope by `success: false` (the value payload is omitted).
+  The public API documents no structured error-type registry beyond this flag;
+  standard HTTP status codes apply for malformed requests. Derived from the
+  observed envelope and the documented public surface.
+envelope:
+  field: success
+  false_means_error: true
+  example: '{ "success": false }'
+problems:
+  - condition: request-succeeded
+    success: true
+    description: Request completed; `value` carries the payload.
+  - condition: data-unavailable-or-error
+    success: false
+    description: >-
+      Endpoint could not return data (e.g. GET /stats/api/v1/supply observed
+      returning { "success": false }). The envelope omits `value`.
+    observed_on: [getSupply]
+  - status: 404
+    description: Unknown path / not found (standard HTTP).
+  - status: 429
+    description: >-
+      Possible temporary restriction under excessive usage (no strict rate
+      limits are enforced, but abuse "may result in temporary restrictions").
+    documented: soft

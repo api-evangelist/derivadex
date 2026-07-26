@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://exchange.derivadex.com/api-docs
+description: Versioning, status, and lifecycle posture for the DerivaDEX API.
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: Version embedded in the path (/exchange/api/v1, /stats/api/v1).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  detail: No published deprecation policy or RFC 8594 Sunset/Deprecation header support found.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://7w33wrnn4p7q.statuspage.io/
+status_page_notes: >-
+  Atlassian Statuspage instance referenced in the exchange app CSP
+  (7w33wrnn4p7q.statuspage.io); returns HTTP 200.
+maturity: >-
+  Mainnet is a limited-access pilot on Ethereum; a public testnet runs on Sepolia
+  (testnet.derivadex.io). Licensed by the Bermuda Monetary Authority.
+deprecated_operations: []

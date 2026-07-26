@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.derivadex.io/
+description: >-
+  DerivaDEX runs a public testnet separate from the mainnet pilot. This is an
+  on-chain exchange, so the sandbox is a blockchain testnet + faucet-minted test
+  USDC rather than test API keys/cards.
+environments:
+  - name: mainnet-pilot
+    chain: Ethereum
+    exchange: https://exchange.derivadex.com/
+    api_base: https://exchange.derivadex.com
+    access: limited-access pilot
+  - name: testnet
+    chain: Ethereum Sepolia
+    exchange: https://testnet.derivadex.io/
+    api_docs: https://testnet.derivadex.io/api-docs
+    access: public
+test_values:
+  test_collateral: Faucet-minted test USDC on Sepolia (mint via the testnet app).
+  note: >-
+    No API test keys or magic identifiers are published — authentication is by
+    wallet signature, and the "sandbox" is the Sepolia testnet deployment.
