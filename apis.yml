@@ -114,7 +114,7 @@ common:
 - type: SignUp
   url: https://exchange.derivadex.com/
 - type: OpenAPI
-  url: openapi/derivadex-exchange-openapi.yml
+  url: openapi/_original/derivadex-exchange-openapi.yml
 - type: Overlay
   url: overlays/derivadex-exchange-overlay.yaml
 - type: Authentication
