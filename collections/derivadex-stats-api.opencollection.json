@@ -1,0 +1,200 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DerivaDEX Exchange & Market Stats API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get exchange status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/status"
+          },
+          "docs": "Current epoch, latest on-chain checkpoint, and active address count."
+        },
+        {
+          "info": {
+            "name": "Get DDX supply",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/supply"
+          },
+          "docs": "DDX token circulating supply. May return `{ \"success\": false }` when unavailable."
+        },
+        {
+          "info": {
+            "name": "Get collateral aggregations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/aggregations/collateral"
+          },
+          "docs": "Time-series aggregation of collateral deposits/withdrawals across the protocol."
+        },
+        {
+          "info": {
+            "name": "Get DDX aggregations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/aggregations/ddx"
+          },
+          "docs": "Time-series aggregation of DDX deposits, withdrawals, trade-mining rewards, and fees. Cursor-paginated via `nextStartingValue`."
+        },
+        {
+          "info": {
+            "name": "Get strategy fees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/fees",
+            "params": [
+              {
+                "name": "trader",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "strategyId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "epoch",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "txOrdinal",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "ordinal",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fee records per trader/strategy."
+        },
+        {
+          "info": {
+            "name": "Get positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/positions",
+            "params": [
+              {
+                "name": "trader",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "strategyId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Current open positions, filterable by trader/strategy/symbol."
+        },
+        {
+          "info": {
+            "name": "Get trader strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/strategies",
+            "params": [
+              {
+                "name": "trader",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Trading strategies (margin accounts), filterable by trader."
+        },
+        {
+          "info": {
+            "name": "Get trader profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/stats/api/v1/trader",
+            "params": [
+              {
+                "name": "trader",
+                "value": "",
+                "type": "query",
+                "description": "Trader address"
+              }
+            ]
+          },
+          "docs": "Profile/aggregate data for a single trader address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

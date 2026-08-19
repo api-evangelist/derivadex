@@ -1,0 +1,336 @@
+{
+  "item": [
+    {
+      "id": "429f824e-cef5-4429-a86f-2db2150e2477",
+      "name": "System",
+      "description": {
+        "content": "Health, server time, and exchange configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "071ac6ff-4339-4e10-a15f-c2ea9ec290b1",
+          "name": "Ping the exchange",
+          "request": {
+            "name": "Ping the exchange",
+            "description": {
+              "content": "Connectivity/health check. Returns an empty value object on success.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9afd74bf-5411-4b49-9b48-dc33cc731835",
+              "name": "Exchange is reachable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"value\": {},\n  \"timestamp\": 5131\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d85f85e9-e309-4cdc-9778-61893871f32c",
+          "name": "Get server time",
+          "request": {
+            "name": "Get server time",
+            "description": {
+              "content": "Returns the current exchange server time in milliseconds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "time"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3487747f-6eb9-4f3e-91ad-971ce4b1078b",
+              "name": "Server time",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "time"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"value\": {\n    \"serverTime\": 5133\n  },\n  \"timestamp\": 3547\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3be17efb-0cd5-4853-8a56-02a6035559b2",
+          "name": "Get exchange info",
+          "request": {
+            "name": "Get exchange info",
+            "description": {
+              "content": "Returns exchange configuration: settlement epoch schedule, supported collateral assets, and tradable symbols with their tick sizes and limits.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "exchange_info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aeda78b6-0d64-4b6a-b6fe-a7b5f147e9cb",
+              "name": "Exchange configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "exchange_info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"value\": {},\n  \"timestamp\": 5131\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eeb9692a-cdc2-4573-a739-e2e4b0b84a80",
+          "name": "List tradable symbols",
+          "request": {
+            "name": "List tradable symbols",
+            "description": {
+              "content": "Returns the list of tradable perpetual products and their metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "symbols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf9cea4c-951c-4ffa-a82b-278ef635bdb2",
+              "name": "Tradable symbols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "symbols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://exchange.derivadex.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c3df6579-56f2-46b3-ac81-ef1f8b2a6dd2",
+    "name": "DerivaDEX Exchange & Stats Market System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ \"value\": ..., \"timestamp\": <unix>, \"success\": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.\n\nContact Support:\n Name: DerivaDEX",
+      "type": "text/plain"
+    }
+  }
+}

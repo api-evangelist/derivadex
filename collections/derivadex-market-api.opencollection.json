@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DerivaDEX Exchange & Stats Market API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tickers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/tickers",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Filter by symbol"
+              },
+              {
+                "name": "marketKind",
+                "value": "",
+                "type": "query",
+                "description": "Filter by market kind"
+              }
+            ]
+          },
+          "docs": "24h market statistics per symbol (last/mark/index price, funding, open interest, volume)."
+        },
+        {
+          "info": {
+            "name": "Get L3 order book",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/order_book",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Filter by symbol"
+              },
+              {
+                "name": "side",
+                "value": "",
+                "type": "query",
+                "description": "0=bid"
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "query",
+                "description": "Number of levels/orders to return"
+              },
+              {
+                "name": "trader",
+                "value": "",
+                "type": "query",
+                "description": "Filter by trader address"
+              },
+              {
+                "name": "strategyIdHash",
+                "value": "",
+                "type": "query",
+                "description": "Filter by strategy id hash"
+              }
+            ]
+          },
+          "docs": "Level-3 open order book. Optionally filter by symbol, side, trader, or strategy."
+        },
+        {
+          "info": {
+            "name": "Get mark prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/mark_prices",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Filter by symbol"
+              },
+              {
+                "name": "epoch",
+                "value": "",
+                "type": "query",
+                "description": "Filter by epoch"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max records to return"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "globalOrdinal",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor (global ordinal)"
+              }
+            ]
+          },
+          "docs": "Historical mark prices for a symbol, paginated by global ordinal."
+        },
+        {
+          "info": {
+            "name": "Get order updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/order_updates",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trader",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "strategyIdHash",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orderHash",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "reason",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "globalOrdinal",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              }
+            ]
+          },
+          "docs": "Historical order/trade updates, filterable by trader, strategy, symbol, order hash, or reason."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

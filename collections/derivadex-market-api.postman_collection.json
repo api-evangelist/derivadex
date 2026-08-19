@@ -1,0 +1,546 @@
+{
+  "item": [
+    {
+      "id": "21ddaaa0-56a4-4fa2-8f85-4d5794a41fe0",
+      "name": "Market",
+      "description": {
+        "content": "Order book, tickers, mark prices, and order updates",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f80418c3-fb25-4629-a514-87f21b185671",
+          "name": "Get tickers",
+          "request": {
+            "name": "Get tickers",
+            "description": {
+              "content": "24h market statistics per symbol (last/mark/index price, funding, open interest, volume).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "tickers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "Filter by symbol"
+                },
+                {
+                  "disabled": false,
+                  "key": "marketKind",
+                  "value": "<integer>",
+                  "description": "Filter by market kind"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09858ab5-8f8e-4fb6-85a2-aab718304f81",
+              "name": "Ticker data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "tickers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "marketKind",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c158277d-81d7-43f3-8e97-5f0e0762f945",
+          "name": "Get L3 order book",
+          "request": {
+            "name": "Get L3 order book",
+            "description": {
+              "content": "Level-3 open order book. Optionally filter by symbol, side, trader, or strategy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "order_book"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "Filter by symbol"
+                },
+                {
+                  "disabled": false,
+                  "key": "side",
+                  "value": "<integer>",
+                  "description": "0=bid"
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "<integer>",
+                  "description": "Number of levels/orders to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "trader",
+                  "value": "<string>",
+                  "description": "Filter by trader address"
+                },
+                {
+                  "disabled": false,
+                  "key": "strategyIdHash",
+                  "value": "<string>",
+                  "description": "Filter by strategy id hash"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "acc487e9-d067-4d0e-934b-35a587bba858",
+              "name": "Open orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "order_book"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "side",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trader",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "strategyIdHash",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7fa9e10-5172-4bfa-a3e8-feb91521a3c4",
+          "name": "Get mark prices",
+          "request": {
+            "name": "Get mark prices",
+            "description": {
+              "content": "Historical mark prices for a symbol, paginated by global ordinal.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "mark_prices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "Filter by symbol"
+                },
+                {
+                  "disabled": false,
+                  "key": "epoch",
+                  "value": "<string>",
+                  "description": "Filter by epoch"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max records to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order"
+                },
+                {
+                  "disabled": false,
+                  "key": "globalOrdinal",
+                  "value": "<string>",
+                  "description": "Pagination cursor (global ordinal)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29ebacc6-f46e-4563-af15-bdc2ec051217",
+              "name": "Mark prices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "mark_prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "epoch",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalOrdinal",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"value\": {},\n  \"timestamp\": 9242\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5389306a-6281-41ae-9e20-b56a8420bd07",
+          "name": "Get order updates",
+          "request": {
+            "name": "Get order updates",
+            "description": {
+              "content": "Historical order/trade updates, filterable by trader, strategy, symbol, order hash, or reason.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "exchange",
+                "api",
+                "v1",
+                "order_updates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trader",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "strategyIdHash",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderHash",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "reason",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "globalOrdinal",
+                  "value": "<string>",
+                  "description": "Pagination cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a048044c-ba66-431b-87cb-f7b68b1cf21e",
+              "name": "Order updates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "exchange",
+                    "api",
+                    "v1",
+                    "order_updates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trader",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "strategyIdHash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderHash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalOrdinal",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"value\": {},\n  \"timestamp\": 9242\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://exchange.derivadex.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1eccf956-ed17-47dd-a3e6-c0409ad240f9",
+    "name": "DerivaDEX Exchange & Stats Market API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ \"value\": ..., \"timestamp\": <unix>, \"success\": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.\n\nContact Support:\n Name: DerivaDEX",
+      "type": "text/plain"
+    }
+  }
+}

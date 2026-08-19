@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DerivaDEX Exchange & Stats Market System API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping the exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/ping"
+          },
+          "docs": "Connectivity/health check. Returns an empty value object on success."
+        },
+        {
+          "info": {
+            "name": "Get server time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/time"
+          },
+          "docs": "Returns the current exchange server time in milliseconds."
+        },
+        {
+          "info": {
+            "name": "Get exchange info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/exchange_info"
+          },
+          "docs": "Returns exchange configuration: settlement epoch schedule, supported collateral assets, and tradable symbols with their tick sizes and limits."
+        },
+        {
+          "info": {
+            "name": "List tradable symbols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://exchange.derivadex.com/exchange/api/v1/symbols"
+          },
+          "docs": "Returns the list of tradable perpetual products and their metadata."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
