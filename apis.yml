@@ -65,6 +65,8 @@ apis:
   humanURL: https://docs.derivadex.io/technical-and-developer/api
   baseURL: https://exchange.derivadex.com
   tags:
+  - Markets
+  tags_raw:
   - Market
   properties:
   - type: OpenAPI
