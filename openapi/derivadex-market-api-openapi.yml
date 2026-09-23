@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: DerivaDEX Exchange & Stats Market API
   version: v1
-  description: 'Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ "value": ..., "timestamp": <unix>, "success": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.'
+  description: Public REST API for the DerivaDEX decentralized derivatives exchange.
   x-apievangelist-generated: '2026-07-18'
   x-apievangelist-method: searched
   x-apievangelist-source: https://exchange.derivadex.com/api-docs
@@ -221,6 +221,32 @@ paths:
                 $ref: '#/components/schemas/Envelope'
 components:
   schemas:
+    Order:
+      type: object
+      properties:
+        orderHash:
+          type: string
+        symbol:
+          type: string
+        side:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: 0=bid
+          1=ask: null
+        originalAmount:
+          type: string
+        amount:
+          type: string
+        price:
+          type: string
+        traderAddress:
+          type: string
+        strategyIdHash:
+          type: string
+        bookOrdinal:
+          type: integer
     Ticker:
       type: object
       properties:
@@ -253,32 +279,6 @@ components:
           type: string
         openInterestValue:
           type: string
-    Order:
-      type: object
-      properties:
-        orderHash:
-          type: string
-        symbol:
-          type: string
-        side:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: 0=bid
-          1=ask: null
-        originalAmount:
-          type: string
-        amount:
-          type: string
-        price:
-          type: string
-        traderAddress:
-          type: string
-        strategyIdHash:
-          type: string
-        bookOrdinal:
-          type: integer
     Envelope:
       type: object
       description: Uniform response envelope used by every endpoint.

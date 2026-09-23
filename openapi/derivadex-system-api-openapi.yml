@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: DerivaDEX Exchange & Stats Market System API
+  title: DerivaDEX Exchange & Stats System API
   version: v1
-  description: 'Public REST API for the DerivaDEX decentralized derivatives exchange. Exposes exchange system/health endpoints, market data (order book, tickers, mark prices, order updates) under `/exchange/api/v1/`, and protocol/stats aggregations (status, DDX supply, collateral, positions, strategies, fees, trader data) under `/stats/api/v1/`. All responses use a uniform envelope `{ "value": ..., "timestamp": <unix>, "success": <bool> }`. The documented public endpoints require no authentication. Captured by the API Evangelist enrichment pipeline from the published Slate reference and verified against the live host.'
+  description: Public REST API for the DerivaDEX decentralized derivatives exchange.
   x-apievangelist-generated: '2026-07-18'
   x-apievangelist-method: searched
   x-apievangelist-source: https://exchange.derivadex.com/api-docs
@@ -90,20 +90,6 @@ paths:
                         $ref: '#/components/schemas/Symbol'
 components:
   schemas:
-    Envelope:
-      type: object
-      description: Uniform response envelope used by every endpoint.
-      properties:
-        value:
-          description: The response payload (object or array), absent on error.
-        timestamp:
-          type: integer
-          description: Unix timestamp (seconds) the response was produced
-        success:
-          type: boolean
-          description: Whether the request succeeded
-      required:
-      - success
     Symbol:
       type: object
       properties:
@@ -119,3 +105,17 @@ components:
         createdAt:
           type: string
           format: date-time
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
+          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success
