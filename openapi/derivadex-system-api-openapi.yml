@@ -90,6 +90,20 @@ paths:
                         $ref: '#/components/schemas/Symbol'
 components:
   schemas:
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
+          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success
     Symbol:
       type: object
       properties:
@@ -105,17 +119,3 @@ components:
         createdAt:
           type: string
           format: date-time
-    Envelope:
-      type: object
-      description: Uniform response envelope used by every endpoint.
-      properties:
-        value:
-          description: The response payload (object or array), absent on error.
-        timestamp:
-          type: integer
-          description: Unix timestamp (seconds) the response was produced
-        success:
-          type: boolean
-          description: Whether the request succeeded
-      required:
-      - success

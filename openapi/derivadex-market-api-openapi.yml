@@ -221,32 +221,20 @@ paths:
                 $ref: '#/components/schemas/Envelope'
 components:
   schemas:
-    Order:
+    Envelope:
       type: object
+      description: Uniform response envelope used by every endpoint.
       properties:
-        orderHash:
-          type: string
-        symbol:
-          type: string
-        side:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
           type: integer
-          enum:
-          - 0
-          - 1
-          description: 0=bid
-          1=ask: null
-        originalAmount:
-          type: string
-        amount:
-          type: string
-        price:
-          type: string
-        traderAddress:
-          type: string
-        strategyIdHash:
-          type: string
-        bookOrdinal:
-          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success
     Ticker:
       type: object
       properties:
@@ -279,17 +267,29 @@ components:
           type: string
         openInterestValue:
           type: string
-    Envelope:
+    Order:
       type: object
-      description: Uniform response envelope used by every endpoint.
       properties:
-        value:
-          description: The response payload (object or array), absent on error.
-        timestamp:
+        orderHash:
+          type: string
+        symbol:
+          type: string
+        side:
           type: integer
-          description: Unix timestamp (seconds) the response was produced
-        success:
-          type: boolean
-          description: Whether the request succeeded
-      required:
-      - success
+          enum:
+          - 0
+          - 1
+          description: 0=bid
+          1=ask: null
+        originalAmount:
+          type: string
+        amount:
+          type: string
+        price:
+          type: string
+        traderAddress:
+          type: string
+        strategyIdHash:
+          type: string
+        bookOrdinal:
+          type: integer
