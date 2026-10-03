@@ -235,6 +235,32 @@ components:
           description: Whether the request succeeded
       required:
       - success
+    Order:
+      type: object
+      properties:
+        orderHash:
+          type: string
+        symbol:
+          type: string
+        side:
+          type: integer
+          enum:
+          - 0
+          - 1
+          description: 0=bid
+          1=ask: null
+        originalAmount:
+          type: string
+        amount:
+          type: string
+        price:
+          type: string
+        traderAddress:
+          type: string
+        strategyIdHash:
+          type: string
+        bookOrdinal:
+          type: integer
     Ticker:
       type: object
       properties:
@@ -267,29 +293,3 @@ components:
           type: string
         openInterestValue:
           type: string
-    Order:
-      type: object
-      properties:
-        orderHash:
-          type: string
-        symbol:
-          type: string
-        side:
-          type: integer
-          enum:
-          - 0
-          - 1
-          description: 0=bid
-          1=ask: null
-        originalAmount:
-          type: string
-        amount:
-          type: string
-        price:
-          type: string
-        traderAddress:
-          type: string
-        strategyIdHash:
-          type: string
-        bookOrdinal:
-          type: integer
