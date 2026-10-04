@@ -221,20 +221,6 @@ paths:
                 $ref: '#/components/schemas/Envelope'
 components:
   schemas:
-    Envelope:
-      type: object
-      description: Uniform response envelope used by every endpoint.
-      properties:
-        value:
-          description: The response payload (object or array), absent on error.
-        timestamp:
-          type: integer
-          description: Unix timestamp (seconds) the response was produced
-        success:
-          type: boolean
-          description: Whether the request succeeded
-      required:
-      - success
     Order:
       type: object
       properties:
@@ -293,3 +279,17 @@ components:
           type: string
         openInterestValue:
           type: string
+    Envelope:
+      type: object
+      description: Uniform response envelope used by every endpoint.
+      properties:
+        value:
+          description: The response payload (object or array), absent on error.
+        timestamp:
+          type: integer
+          description: Unix timestamp (seconds) the response was produced
+        success:
+          type: boolean
+          description: Whether the request succeeded
+      required:
+      - success
